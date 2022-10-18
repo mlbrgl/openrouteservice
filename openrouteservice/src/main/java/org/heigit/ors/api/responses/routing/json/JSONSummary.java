@@ -33,6 +33,10 @@ public class JSONSummary {
     @JsonProperty(value = "duration")
     @JsonFormat(shape = JsonFormat.Shape.NUMBER_FLOAT, pattern = "%.1d")
     protected Double duration;
+    @ApiModelProperty(value = "Total weight.", example = "604")
+    @JsonProperty(value = "weight")
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_FLOAT, pattern = "%.1d")
+    protected Double weight;
     @ApiModelProperty(value = "Total ascent in meters." +
             "CUSTOM_KEYS:{'validWhen':{'ref':'elevation','value':true}}", example = "166.3")
     @JsonProperty(value = "ascent")
@@ -43,13 +47,14 @@ public class JSONSummary {
     @JsonFormat(shape = JsonFormat.Shape.NUMBER_FLOAT, pattern = "%.1d")
     protected Double descent;
 
-    public JSONSummary(Double distance, Double duration) {
+    public JSONSummary(Double distance, Double duration, Double weight) {
         this.distance = distance;
         this.duration = duration;
+        this.weight = weight;
     }
 
-    public JSONSummary(Double distance, Double duration, Double ascent, Double descent) {
-        this(distance, duration);
+    public JSONSummary(Double distance, Double duration, Double weight, Double ascent, Double descent) {
+        this(distance, duration, weight);
         this.ascent = ascent;
         this.descent = descent;
     }
@@ -61,6 +66,7 @@ public class JSONSummary {
         }
         this.distance = route.getSummary().getDistance();
         this.duration = route.getSummary().getDuration();
+        this.weight = route.getSummary().getWeight();
     }
 
     public Double getDistance() {
@@ -77,5 +83,9 @@ public class JSONSummary {
 
     public Double getAscent() {
         return ascent;
+    }
+
+    public Double getWeight() {
+        return weight;
     }
 }

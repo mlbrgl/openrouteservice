@@ -26,12 +26,14 @@ public class RouteSegment {
 	private double duration;
 	private double ascent;
 	private double descent;
+	private double weight;
 	private double detourFactor = 0.0;
 	private List<RouteStep> steps;
 
 	public RouteSegment(PathWrapper path, DistanceUnit units) throws Exception {
 		distance = FormatUtility.roundToDecimalsForUnits(DistanceUnitUtil.convert(path.getDistance(), DistanceUnit.METERS, units), units);
 		duration = FormatUtility.roundToDecimals(path.getTime()/1000.0, 1);
+		weight = path.getRouteWeight();
 		ascent = path.getAscend();
 		descent = path.getDescend();
 		steps = new ArrayList<>();
@@ -45,6 +47,11 @@ public class RouteSegment {
 	public double getDuration()
 	{
 		return duration;
+	}
+
+	public double getWeight()
+	{
+		return weight;
 	}
 
 	public double getAscent()

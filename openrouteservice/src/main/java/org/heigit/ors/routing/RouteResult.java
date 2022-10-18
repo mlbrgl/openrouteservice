@@ -167,12 +167,15 @@ public class RouteResult {
 	void calculateRouteSummary(RoutingRequest request) {
 		double distance = 0.0;
 		double duration = 0.0;
+		double weight = 0.0;
 		for (RouteSegment seg : getSegments()) {
 			distance += seg.getDistance();
 			duration += seg.getDuration();
+			weight += seg.getWeight();
 		}
 		summary.setDuration(duration);
 		summary.setDistance(FormatUtility.roundToDecimalsForUnits(distance, request.getUnits()));
+		summary.setWeight(weight);
 		double averageSpeed = 0;
 		if (duration > 0)
 			averageSpeed = distance / (request.getUnits() == DistanceUnit.METERS ? 1000 : 1) / (duration / 3600);
@@ -217,4 +220,8 @@ public class RouteResult {
 	public void setArrival(ZonedDateTime arrival) {
 	    this.arrival = arrival;
     }
+
+    public void setWeight(double weight) {
+		summary.setWeight(weight);
+	}
 }

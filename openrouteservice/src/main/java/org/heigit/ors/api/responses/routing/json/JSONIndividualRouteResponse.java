@@ -76,9 +76,9 @@ public class JSONIndividualRouteResponse extends JSONBasedIndividualRouteRespons
         geomResponse = constructEncodedGeometry(this.routeCoordinates);
 
         if(this.includeElevation)
-            summary = new JSONSummary(routeResult.getSummary().getDistance(), routeResult.getSummary().getDuration(), routeResult.getSummary().getAscent(), routeResult.getSummary().getDescent());
+            summary = new JSONSummary(routeResult.getSummary().getDistance(), routeResult.getSummary().getDuration(), routeResult.getSummary().getWeight(), routeResult.getSummary().getAscent(), routeResult.getSummary().getDescent());
         else
-            summary = new JSONSummary(routeResult.getSummary().getDistance(), routeResult.getSummary().getDuration());
+            summary = new JSONSummary(routeResult.getSummary().getDistance(), routeResult.getSummary().getDuration(), routeResult.getSummary().getWeight());
 
         if(routeResult.hasDepartureAndArrival()) {
             departure = routeResult.getDeparture();

@@ -18,6 +18,7 @@ import com.graphhopper.util.shapes.BBox;
 public class RouteSummary {
 	private double distance;
 	private double duration;
+	private double weight;
 	private double ascent;
 	private double descent;
 	private double avgSpeed;
@@ -37,6 +38,14 @@ public class RouteSummary {
 
 	public void setDuration(double duration) {
 		this.duration = duration;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
 	}
 	
 	public BBox getBBox()

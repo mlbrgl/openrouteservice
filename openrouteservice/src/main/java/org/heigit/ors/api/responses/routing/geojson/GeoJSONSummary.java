@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonIgnoreProperties({"distance", "duration"})
+@JsonIgnoreProperties({"distance", "duration", "weight"})
 public class GeoJSONSummary extends JSONSummary {
     @JsonProperty("segments")
     private List<JSONSegment> segments;
@@ -77,7 +77,7 @@ public class GeoJSONSummary extends JSONSummary {
 
     @JsonProperty("summary")
     public JSONSummary getSummary() {
-        return new JSONSummary(this.distance, this.duration);
+        return new JSONSummary(this.distance, this.duration, this.weight);
     }
 
     @JsonProperty("warnings")
