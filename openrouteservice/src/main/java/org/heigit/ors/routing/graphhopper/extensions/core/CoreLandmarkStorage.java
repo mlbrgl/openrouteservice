@@ -30,6 +30,7 @@ import com.graphhopper.routing.util.AreaIndex;
 import com.graphhopper.routing.util.EdgeFilter;
 import com.graphhopper.routing.weighting.Weighting;
 import com.graphhopper.storage.*;
+import com.graphhopper.util.EdgeIteratorState;
 import com.graphhopper.util.Helper;
 import com.graphhopper.util.StopWatch;
 import com.graphhopper.util.shapes.GHPoint;
@@ -407,20 +408,27 @@ public class CoreLandmarkStorage extends LandmarkStorage {
     }
 
     private class CoreLandmarkSelector extends CoreLandmarkExplorer {
+        private final BooleanEncodedValue accessEnc;
+        Weighting lmSelectionWeighting;
 
         public CoreLandmarkSelector(RoutingCHGraph g, EdgeFilter accessFilter, boolean reverse) {
             super(g, accessFilter, reverse);
+            this.lmSelectionWeighting = getLmSelectionWeighting();
+            this.accessEnc = g.getWeighting().getFlagEncoder().getAccessEnc();
         }
 
         @Override
         protected double calcWeight(RoutingCHEdgeIteratorState edgeState, boolean reverse, int prevOrNextEdgeId) {
+            //TODO refactoring: probably no need of splitting up edge expansion, do instead recursive calcWeight
             if (edgeState.isShortcut())
                 return expandEdge(edgeState);
 
-            if (super.calcWeight(edgeState, reverse, prevOrNextEdgeId) >= Double.MAX_VALUE)
-                return Double.POSITIVE_INFINITY;
+            EdgeIteratorState edge = ((RoutingCHEdgeIteratorStateImpl) edgeState).getBaseGraphEdgeState();
 
-            return 1;
+            if (!edge.get(accessEnc) || !edge.getReverse(accessEnc))
+                return 1.0D / 0.0;
+            else
+                return lmSelectionWeighting.calcEdgeWeight(edge, reverse);
         }
 
         private int expandEdge(RoutingCHEdgeIteratorState mainEdgeState) {
