@@ -63,6 +63,7 @@ RELEASING:
 - update maven repository for dependencies ([#1536](https://github.com/GIScience/openrouteservice/pull/1536))
 - spring-boot-starter-parent to v3.1.6 ([#1630](https://github.com/GIScience/openrouteservice/issues/1630))
 - fix IN1-JAVA-ORGMOZILLA-1314295 ([#1627](https://github.com/GIScience/openrouteservice/issues/1627))
+- move APIEnums into API module ([#1634](https://github.com/GIScience/openrouteservice/issues/1634))
 
 ### Deprecated
 - JSON configuration and related classes ([#1506](https://github.com/GIScience/openrouteservice/pull/1506))
